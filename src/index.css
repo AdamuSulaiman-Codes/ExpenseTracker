@@ -1,68 +1,145 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
 body {
   margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  flex-direction: column;
+  height: 100vh;
+  font-family: 'Courier New', Courier, monospace;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.header-container{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 5rem;
+  background-color: #8dc6ff;
+  padding-left: 2rem;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+.header-text{
+  color: #22313f;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 600;
+}
+
+
+
+
+
+
+
+
+/* Layout Grid */
+.main-content {
+  display: grid;
+  grid-template-columns: 250px 1fr; /* Sidebar takes 250px, rest for content */
+  height: calc(100vh - 5rem); /* Adjusts for header height */
+}
+
+/* Sidebar */
+.side-bar {
+  background-color: #e4f1fe;
+  color: #f2f2f2;
+  padding: 1rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.side-bar-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.side-bar-items li {
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  transition: background 0.3s;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
+/* Make the entire li clickable */
+.side-bar-link {
+  text-decoration: none;
+  color: #34495e;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+/* Hover effect */
+.side-bar-link:hover {
+  background-color: #8dc6ff;
+}
+
+
+/* Main Dashboard Section */
+.dashboard {
+  padding: 1rem;
+  background-color: #f2f2f2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Responsive for small screens */
+@media (max-width: 768px) {
+  .main-content {
+    grid-template-columns: 180px 1fr; /* Sidebar becomes full width on small screens */
   }
 }
+
+
+
+
+
+
+
+
+
+/* Error Page Styling */
+.error {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  background-color: #f8d7da; /* Light red background for error indication */
+  color: #721c24; /* Dark red text for contrast */
+  font-family: "Arial", sans-serif;
+}
+
+.error h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.error p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.error a {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #dc3545; /* Bootstrap danger color */
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background 0.3s ease-in-out;
+}
+
+.error a:hover {
+  background-color: #b02a37; /* Darker red on hover */
+}
+
+

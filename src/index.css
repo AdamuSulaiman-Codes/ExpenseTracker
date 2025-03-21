@@ -87,6 +87,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 /* Responsive for small screens */
@@ -143,3 +144,334 @@ body {
 }
 
 
+
+
+
+
+.card {
+  background-color: #f2f2f2; /* Light background */
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  text-align: center;
+  width: 200px;
+  margin: auto;
+  height: 100px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+.card p {
+  font-size: 18px;
+  color: #222831;
+  font-weight: 500;
+}
+
+.card h2 {
+  font-size: 24px;
+  color: #f96d00; /* Highlighted color */
+  font-weight: bold;
+}
+
+.card-list{
+  display: flex;
+  gap: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.chart {
+  width: 80%;
+  height: 250px; /* Adjust height as needed */
+  background-color: #f2f2f2; /* Light background */
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #222831;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+}
+
+
+
+
+
+
+
+
+
+.resent {
+  width: 77%;
+  background-color: #f2f2f2; /* Light background */
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  font-family: "Arial", sans-serif;
+  color: #222831;
+}
+
+.resent p:first-child {
+  font-size: 18px;
+  font-weight: bold;
+  color: #f96d00; /* Accent color */
+  margin-bottom: 8px;
+}
+
+.resent p:last-child {
+  font-size: 16px;
+  font-weight: 500;
+  color: #393e46;
+}
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 768px) {
+  .card-list {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card {
+    width: 350px; /* Make cards take most of the screen width */
+    height: auto; /* Adjust height based on content */
+    padding: 15px;
+  }
+
+  .chart {
+    width: 95%;
+    height: 300px; /* Slightly reduce height for smaller screens */
+    font-size: 20px;
+  }
+
+  .resent {
+    width: 90%;
+    padding: 12px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .chart {
+    width: 100%;
+    height: 180px;
+    font-size: 18px;
+  }
+
+  .resent {
+    width: 100%;
+    padding: 10px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.transaction-form {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.transaction-form h2 {
+  text-align: center;
+  color: #222831;
+}
+
+.transaction-form label {
+  display: block;
+  font-weight: bold;
+  margin: 10px 0 5px;
+  color: #393e46;
+}
+
+.transaction-form input,
+.transaction-form select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #fff;
+}
+
+.transaction-form select {
+  cursor: pointer;
+}
+
+.transaction-form button {
+  width: 100%;
+  padding: 12px;
+  background-color: #f96d00;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+.transaction-form button:hover {
+  background-color: #d55a00;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Modal styling */
+.modal {
+  border: none;
+  border-radius: 10px;
+  padding: 20px;
+  width: 400px;
+  max-width: 90%;
+  background-color: #f2f2f2;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  position: relative;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Modal Content */
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Close Button */
+.modal-content button {
+  background-color: #f96d00;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+  margin-top: 15px;
+}
+
+.modal-content button:hover {
+  background-color: #d55a00;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+.custom-icon {
+  position: fixed;
+  cursor: pointer;
+  bottom: 20px;
+  right: 20px;
+  padding: 15px;
+  font-size: 50px; /* Adjust size */
+  color: #8dc6ff;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.05); /* Very light transparency */
+  transition: transform 0.2s ease-in-out, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.custom-icon:hover {
+  transform: scale(1.1);
+  background-color: rgba(0, 0, 0, 0.1); /* Slightly darker on hover */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.custom-icon:active {
+  transform: scale(0.9);
+  background-color: rgba(0, 0, 0, 0.2); /* Darker when clicked */
+}

@@ -1,7 +1,7 @@
-import DashBoad from "../components/MainSection";
+import DashBoard from "../components/DashBoard";
 
 const DashBoardPage = () => {
-  return <DashBoad />;
+  return <DashBoard />;
 };
 
 export default DashBoardPage;

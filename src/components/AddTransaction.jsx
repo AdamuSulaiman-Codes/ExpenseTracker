@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import { transactionAction } from "../store/TransactionSlice";
 
 const AddTransaction = () => {
+  const transactions = useSelector((state) => state.transaction.transaction);
+
   const dispatch = useDispatch();
   const formRef = useRef(null);
   const [formattedAmount, setFormattedAmount] = useState("");
@@ -18,16 +20,17 @@ const AddTransaction = () => {
     const date = formData.get("date");
     const randomId = Math.floor(Math.random() * 10000000000);
 
-    dispatch(
-      transactionAction.addNewTransaction({
-        amount,
-        type,
-        category,
-        date,
-        id: randomId,
-        title,
-      })
-    );
+    const newTransaction = {
+      amount: parseFloat(amount),
+      type,
+      category,
+      date,
+      id: randomId,
+      title,
+    };
+
+    dispatch(transactionAction.addNewTransaction(newTransaction));
+    dispatch(transactionAction.closeModal("addTransactions"));
 
     // Reset the form and formatted amount
     if (formRef.current) {
@@ -42,11 +45,17 @@ const AddTransaction = () => {
 
   // Format number with commas as thousands separators
   const formatAmount = (value) => {
-    // Remove non-digit characters except decimal point
-    const numericValue = value.replace(/[^\d]/g, "");
+    // Remove all non-digit characters except the decimal point
+    const numericValue = value.replace(/[^0-9.]/g, "");
 
-    // Format with commas
-    return numericValue.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    // Convert to number to handle cases like "000" -> "0"
+    const number = parseFloat(numericValue);
+
+    // If number is NaN (empty input), return an empty string
+    if (isNaN(number)) return "";
+
+    // Format with commas while preserving the decimal part
+    return number.toLocaleString("en-US", { maximumFractionDigits: 2 });
   };
 
   const handleAmountChange = (e) => {

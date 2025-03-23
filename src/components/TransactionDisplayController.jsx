@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { transactionAction } from "../store/TransactionSlice";
 
 const TransactionDisplayController = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const dispatch = useDispatch();
+  const searchQuery = useSelector((state) => state.transaction.searchQuery);
 
-  function handleSearchChange(event) {}
+  function handleSearchChange(event) {
+    dispatch(transactionAction.setSearchQuery(event.target.value));
+  }
   function handleDateChange(event) {}
   function handleCategoryChange(event) {}
   function handleTypeChange(event) {}

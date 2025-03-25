@@ -1,10 +1,10 @@
 import React from "react";
 
-const Card = () => {
+const Card = ({ title, amount, ...props }) => {
   return (
     <main className="card">
-      <p>Heading </p>
-      <h2>1,000</h2>
+      <p>{title} </p>
+      <h2 {...props}>{amount}</h2>
     </main>
   );
 };

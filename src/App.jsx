@@ -5,6 +5,7 @@ import { Outlet } from "react-router-dom";
 import Modal from "./assets/Modal";
 import AddTransaction from "./components/AddTransaction";
 import DeleteTransaction from "./components/DeleteTransaction";
+import EditTransaction from "./components/EditTransaction";
 
 const App = () => {
   return (
@@ -14,6 +15,9 @@ const App = () => {
       </Modal>
       <Modal id="deleteTransaction">
         <DeleteTransaction />
+      </Modal>
+      <Modal id="editTransaction">
+        <EditTransaction />
       </Modal>
       <div>
         <Header />

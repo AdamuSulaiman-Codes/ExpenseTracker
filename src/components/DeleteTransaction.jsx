@@ -6,17 +6,30 @@ const DeleteTransaction = () => {
   const selectedItem = useSelector((state) => state.transaction.selectedItem);
   const dispatch = useDispatch();
 
+  // Early return if no transaction is selected
+  if (!selectedItem) {
+    return <div>No transaction selected for deletion</div>;
+  }
+
   return (
     <div className="delete-transaction">
-      <h2>Are you sure you want to delete???</h2>
+      <h2>Are you sure you want to delete?</h2>
       <p>{selectedItem.title}</p>
-      <button
-        onClick={() => {
-          dispatch(transactionAction.deleteTransaction(selectedItem.id));
-          dispatch(transactionAction.closeModal("deleteTransaction"));
-        }}>
-        Delete
-      </button>
+      <div className="delete-actions">
+        <button
+          onClick={() => {
+            dispatch(transactionAction.deleteTransaction(selectedItem.id));
+            dispatch(transactionAction.closeModal("deleteTransaction"));
+          }}>
+          Confirm Delete
+        </button>
+        <button
+          onClick={() => {
+            dispatch(transactionAction.closeModal("deleteTransaction"));
+          }}>
+          Cancel
+        </button>
+      </div>
     </div>
   );
 };

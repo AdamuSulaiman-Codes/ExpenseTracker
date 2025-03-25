@@ -195,7 +195,7 @@ body {
 
 .chart {
   width: 80%;
-  height: 250px; /* Adjust height as needed */
+  height: 500px; /* Adjust height as needed */
   background-color: #f2f2f2; /* Light background */
   border-radius: 12px;
   display: flex;
@@ -206,6 +206,7 @@ body {
   color: #222831;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   margin: 20px auto;
+  flex-direction: column;
 }
 
 
@@ -216,7 +217,7 @@ body {
 
 
 
-.resent {
+.recent {
   width: 77%;
   background-color: #f2f2f2; /* Light background */
   padding: 16px;
@@ -227,20 +228,15 @@ body {
   color: #222831;
 }
 
-.resent p:first-child {
-  font-size: 18px;
-  font-weight: bold;
-  color: #f96d00; /* Accent color */
-  margin-bottom: 8px;
+#recent-header{
+  font-size: large;
 }
-
-.resent p:last-child {
-  font-size: 16px;
-  font-weight: 500;
-  color: #393e46;
+.recent-description{
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  justify-content: space-between;
 }
-
-
 
 
 
@@ -263,7 +259,7 @@ body {
 
   .chart {
     width: 95%;
-    height: 300px; /* Slightly reduce height for smaller screens */
+    height: 500px; /* Slightly reduce height for smaller screens */
     font-size: 20px;
   }
 

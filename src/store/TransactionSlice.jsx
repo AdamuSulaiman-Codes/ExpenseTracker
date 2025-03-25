@@ -1,12 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  transaction: [],
+  transaction: JSON.parse(localStorage.getItem("transactions")) || [],
   modalIsOpen: {},
   loading: true,
-  selectedItem: { title: "", id: 0 },
-  filteredTransaction: [],
+  selectedItem: null, // Changed from an object with default values
   searchQuery: "",
+  dateFilter: "",
+  categoryFilter: "All",
+  typeFilter: "All",
 };
 
 const transactionSlice = createSlice({
@@ -16,24 +18,21 @@ const transactionSlice = createSlice({
     setSearchQuery(state, action) {
       state.searchQuery = action.payload;
     },
-    currentSelectedItem(state, action) {
-      state.selectedItem = action.payload;
+    setDateFilter(state, action) {
+      state.dateFilter = action.payload;
     },
-    addNewTransaction(state, action) {
-      state.transaction.push(action.payload);
-      localStorage.setItem("transactions", JSON.stringify(state.transaction));
+    setCategoryFilter(state, action) {
+      state.categoryFilter = action.payload;
     },
-    openModal(state, action) {
-      state.modalIsOpen[action.payload] = true;
-    },
-    closeModal(state, action) {
-      state.modalIsOpen[action.payload] = false;
-    },
-    toggleLoading(state, action) {
-      state.loading = action.payload;
+    setTypeFilter(state, action) {
+      state.typeFilter = action.payload;
     },
     setTransactions(state, action) {
       state.transaction = Array.isArray(action.payload) ? action.payload : [];
+      localStorage.setItem("transactions", JSON.stringify(state.transaction));
+    },
+    addNewTransaction(state, action) {
+      state.transaction.push(action.payload);
       localStorage.setItem("transactions", JSON.stringify(state.transaction));
     },
     deleteTransaction(state, action) {
@@ -42,7 +41,28 @@ const transactionSlice = createSlice({
       );
       localStorage.setItem("transactions", JSON.stringify(state.transaction));
     },
-    filterTransaction(state, action) {},
+    editSelectedTransaction(state, action) {
+      state.transaction = state.transaction.map((transact) =>
+        transact.id === action.payload.id ? action.payload : transact
+      );
+      localStorage.setItem("transactions", JSON.stringify(state.transaction));
+    },
+    toggleLoading(state, action) {
+      state.loading = action.payload;
+    },
+    openModal(state, action) {
+      state.modalIsOpen = { ...state.modalIsOpen, [action.payload]: true };
+    },
+    closeModal(state, action) {
+      state.modalIsOpen = { ...state.modalIsOpen, [action.payload]: false };
+    },
+    currentSelectedItem(state, action) {
+      // Ensure we always store the full transaction object
+      state.selectedItem =
+        action.payload && action.payload.id
+          ? action.payload
+          : state.transaction.find((t) => t.id === action.payload) || null;
+    },
   },
 });
 

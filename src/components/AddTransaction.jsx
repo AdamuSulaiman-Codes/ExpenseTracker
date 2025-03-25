@@ -13,7 +13,7 @@ const AddTransaction = () => {
 
   function getFormData(prevState, formData) {
     const title = formData.get("title");
-    // Get the raw amount without commas for processing
+
     const amount = formData.get("amount").replace(/,/g, "");
     const type = formData.get("type");
     const category = formData.get("category");

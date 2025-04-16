@@ -5,6 +5,7 @@ import { transactionAction } from "../store/TransactionSlice";
 
 const EditTransaction = () => {
   const selectedItem = useSelector((state) => state.transaction.selectedItem);
+  const categories = useSelector((state) => state.transaction.category);
   const dispatch = useDispatch();
 
   function editTransaction(prevState, formData) {
@@ -65,11 +66,13 @@ const EditTransaction = () => {
 
       <label>Category:</label>
       <select name="category" defaultValue={selectedItem.category}>
-        <option value="Food">Food</option>
-        <option value="Rent">Rent</option>
-        <option value="Transport">Transport</option>
-        <option value="Salary">Salary</option>
-        <option value="Other">Other</option>
+        {categories.map(category => {
+          return (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          );
+        })}
       </select>
 
       <label>Date:</label>

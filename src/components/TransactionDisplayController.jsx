@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { transactionAction } from "../store/TransactionSlice";
 const TransactionDisplayController = () => {
   const dispatch = useDispatch();
+  const categories = useSelector(state => state.transaction.category)
 
   function handleSearchChange(event) {
     dispatch(transactionAction.setSearchQuery(event.target.value));
@@ -34,12 +35,13 @@ const TransactionDisplayController = () => {
         name="category"
         defaultValue="All"
         onChange={handleCategoryChange}>
-        <option value="All">All</option>
-        <option value="Food">Food</option>
-        <option value="Rent">Rent</option>
-        <option value="Transport">Transport</option>
-        <option value="Salary">Salary</option>
-        <option value="Other">Other</option>
+          {categories.map(category => {
+          return (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          );
+        })}
       </select>
     </section>
   );

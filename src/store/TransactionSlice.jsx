@@ -9,6 +9,13 @@ const initialState = {
   dateFilter: "",
   categoryFilter: "All",
   typeFilter: "All",
+  category: JSON.parse(localStorage.getItem("categories")) || [
+    "Food",
+    "Rent",
+    "Transport",
+    "Salary",
+    "Other",
+  ],
 };
 
 const transactionSlice = createSlice({
@@ -63,6 +70,28 @@ const transactionSlice = createSlice({
           ? action.payload
           : state.transaction.find((t) => t.id === action.payload) || null;
     },
+    addCategory(state, action) {
+      if (!state.category.includes(action.payload)) {
+        state.category.push(action.payload);
+        localStorage.setItem("categories", JSON.stringify(state.category));
+      }
+    },
+    removeCategory(state, action){
+      const updatedCategory = state.category.filter((cat, index) => action.payload != index)
+
+      state.category = [...updatedCategory]
+
+      localStorage.setItem("categories", JSON.stringify(updatedCategory));
+    },
+    setCategory(state, action) {
+      const categories = action.payload;
+      if (Array.isArray(categories)) {
+        state.category = categories;
+        localStorage.setItem("categories", JSON.stringify(categories));
+      } else {
+        console.error("Invalid category data:", categories);
+      }
+    }
   },
 });
 

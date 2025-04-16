@@ -21,6 +21,19 @@ const TransactionList = () => {
   useEffect(() => {
     dispatch(transactionAction.toggleLoading(true));
 
+        // In TransactionList.js useEffect
+    const storedCategories = localStorage.getItem("categories");
+    if (storedCategories) {
+      try {
+        const parsedCategories = JSON.parse(storedCategories);
+        if (Array.isArray(parsedCategories)) {
+          dispatch(transactionAction.setCategory(parsedCategories));
+        }
+      } catch (error) {
+        console.error("Error parsing categories from localStorage:", error);
+      }
+    }
+
     const fetchTransactions = async () => {
       try {
         let storedTransactions = localStorage.getItem("transactions");

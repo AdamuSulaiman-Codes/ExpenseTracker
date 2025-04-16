@@ -1,7 +1,10 @@
 import React from "react";
+import AddCategory from "./AddCategory";
 
 const Category = () => {
-  return <div>Category</div>;
+  return <div className="category-container">
+    <AddCategory/>
+  </div>;
 };
 
 export default Category;

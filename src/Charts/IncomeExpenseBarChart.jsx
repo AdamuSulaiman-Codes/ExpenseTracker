@@ -8,20 +8,26 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { useSelector } from "react-redux";
+import { Formatter } from "../assets/util";
 
 const IncomeExpenseBarChart = () => {
   const transactions = useSelector(
     (state) => state.transaction.transaction || []
   );
 
-  console.log("Transactions from Redux:", transactions); // Debugging output
+  // Ensure transactions is an array
+  const transactionsArray = Array.isArray(transactions) ? transactions : [];
 
-  const aggregatedData = transactions.reduce(
+  // Standardize type checking - use lowercase for consistency
+  const aggregatedData = transactionsArray.reduce(
     (acc, transaction) => {
       const amount = parseFloat(transaction.amount) || 0;
-      if (transaction.type === "Income") {
+      // Convert type to lowercase for case-insensitive comparison
+      const type = transaction.type?.toLowerCase() || "";
+      
+      if (type === "income") {
         acc[0].value += amount;
-      } else {
+      } else if (type === "expense") {
         acc[1].value += Math.abs(amount);
       }
       return acc;
@@ -32,7 +38,10 @@ const IncomeExpenseBarChart = () => {
     ]
   );
 
-  console.log("Aggregated Data:", aggregatedData); // Debugging output
+  // If no data, display a message instead of empty chart
+  if (transactionsArray.length === 0) {
+    return <div>No transaction data available</div>;
+  }
 
   return (
     <div className="chart-container" style={{ width: "70%", height: "250px" }}>
@@ -40,7 +49,7 @@ const IncomeExpenseBarChart = () => {
         <BarChart data={aggregatedData}>
           <XAxis dataKey="name" />
           <YAxis />
-          <Tooltip />
+          <Tooltip formatter={(value) => `${Formatter.format(value)}`} />
           <Bar dataKey="value" fill="#4CAF50" />
         </BarChart>
       </ResponsiveContainer>

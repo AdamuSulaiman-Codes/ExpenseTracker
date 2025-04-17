@@ -1,47 +1,64 @@
 import React from "react";
-import { PieChart, Pie, Tooltip, Cell, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import { useSelector } from "react-redux";
 
-const COLORS = ["#4CAF50", "#f96d00"]; // Green for Income, Orange for Expense
+const COLORS = ["#4CAF50", "#F44336"]; // Green for income, Red for expense
 
 const IncomeExpensePieChart = () => {
-  const transactions = useSelector((state) => state.transaction.transaction);
+  const transactions = useSelector((state) => state.transaction.transaction || []);
+  
+  // Ensure transactions is an array
+  const transactionsArray = Array.isArray(transactions) ? transactions : [];
 
-  // Aggregate data into total income & total expenses
-  const aggregatedData = transactions.reduce(
+  // Calculate total income and expenses
+  const { income, expense } = transactionsArray.reduce(
     (acc, transaction) => {
-      const amount = transaction.amount; // Convert "5,000" to 5000
-      if (transaction.type === "Income") {
-        acc[0].value += amount; // Income
-      } else {
-        acc[1].value += amount; // Expense
+      const amount = parseFloat(transaction.amount) || 0;
+      // Convert type to lowercase for consistency
+      const type = transaction.type?.toLowerCase() || "";
+      
+      if (type === "income") {
+        acc.income += amount;
+      } else if (type === "expense") {
+        acc.expense += Math.abs(amount); // Using abs to ensure positive value
       }
       return acc;
     },
-    [
-      { name: "Income", value: 0 },
-      { name: "Expense", value: 0 },
-    ]
+    { income: 0, expense: 0 }
   );
 
+  const data = [
+    { name: "Income", value: income },
+    { name: "Expense", value: expense },
+  ];
+
+  // Don't render chart if no data
+  if (income === 0 && expense === 0) {
+    return <div>No transaction data available</div>;
+  }
+
+  const formatTooltip = (value) => `$${value.toFixed(2)}`;
+
   return (
-    <div style={{ width: "100%", height: 300 }}>
+    <div style={{ width: "100%", height: "250px" }}>
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
           <Pie
-            data={aggregatedData}
+            data={data}
             cx="50%"
             cy="50%"
-            innerRadius={60}
-            outerRadius={100}
+            labelLine={false}
+            outerRadius={80}
             fill="#8884d8"
             dataKey="value"
-            label={({ name }) => name}>
-            {aggregatedData.map((entry, index) => (
-              <Cell key={index} fill={COLORS[index]} />
+            label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+          >
+            {data.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
-          <Tooltip />
+          <Tooltip formatter={formatTooltip} />
+          <Legend />
         </PieChart>
       </ResponsiveContainer>
     </div>

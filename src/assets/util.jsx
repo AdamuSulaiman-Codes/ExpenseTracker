@@ -1,44 +1,39 @@
-import { db, collection, addDoc } from "../firebase/firebaseConfig";
-import { transactionData } from "./routeData";
-
-const transactionsCollection = collection(db, "transactions");
-
-/**
- * Uploads the initial transaction data to Firestore.
- */
-const uploadTransactions = async () => {
-  try {
-    for (const transaction of transactionData) {
-      await addDoc(transactionsCollection, transaction);
-    }
-    console.log("Initial transactions added successfully!");
-  } catch (error) {
-    console.error("Error uploading transactions:", error);
-  }
-};
-
-/**
- * Adds a new transaction to Firestore.
- * @param {Object} transaction - The transaction object to add.
- */
-const addTransaction = async (transactionData) => {
-  const transactionsRef = collection(db, "transactions");
-  const existingTransactions = await getDocs(transactionsRef);
-
-  const existingTitles = new Set(
-    existingTransactions.docs.map((doc) => doc.data().title)
-  );
-
-  transactionData.forEach(async (transaction) => {
-    if (!existingTitles.has(transaction.title)) {
-      await addDoc(transactionsRef, transaction);
-    }
-  });
-};
-
-export { uploadTransactions, addTransaction };
 
 export const Formatter = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
 });
+
+// utils/getTopSpendingCategories.js
+export const getTopSpendingCategories = (transactions) => {
+  const categoryTotals = {};
+
+  // Make sure transactions is an array
+  const safeTransactions = Array.isArray(transactions) ? transactions : [];
+
+  safeTransactions.forEach((transaction) => {
+    // Check that type is "expense" (case insensitive)
+    if (transaction.type && transaction.type.toLowerCase() === "expense") {
+      const { category, amount } = transaction;
+      
+      // Skip if category is missing
+      if (!category) return;
+      
+      // Convert amount to number safely
+      const numAmount = parseFloat(amount);
+      
+      // Only add valid numbers
+      if (!isNaN(numAmount)) {
+        categoryTotals[category] = (categoryTotals[category] || 0) + numAmount;
+      }
+    }
+  });
+
+  // Convert to array and sort descending
+  return Object.entries(categoryTotals)
+    .map(([category, total]) => ({ 
+      category, 
+      total: parseFloat(total.toFixed(2)) // Round to 2 decimal places
+    }))
+    .sort((a, b) => b.total - a.total);
+};

@@ -3,6 +3,7 @@ const routeData = [
   { id: 2, path: "transactions", name: "Transaction" },
   { id: 3, path: "categories", name: "Categories" },
   { id: 4, path: "reports", name: "Reports" },
+  {id: 5, path: "settings", name: "Settings" },
 ];
 
 export default routeData;

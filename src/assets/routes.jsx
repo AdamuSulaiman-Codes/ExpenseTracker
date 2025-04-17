@@ -5,6 +5,7 @@ import TransactionPage from "../Pages/TransactionPage";
 import ErrorPage from "../Pages/ErrorPage";
 import CategoryPage from "../Pages/CategoryPage";
 import ReportPage from "../Pages/ReportPage";
+import SettingsPage from "../Pages/SettingsPage";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
       { path: "transactions", element: <TransactionPage /> },
       { path: "categories", element: <CategoryPage /> },
       { path: "reports", element: <ReportPage /> },
+      {path: "settings", element: <SettingsPage /> },
       { path: "*", element: <ErrorPage /> },
     ],
   },

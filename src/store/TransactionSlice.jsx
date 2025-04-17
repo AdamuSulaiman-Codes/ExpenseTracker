@@ -91,7 +91,11 @@ const transactionSlice = createSlice({
       } else {
         console.error("Invalid category data:", categories);
       }
-    }
+    },
+    clearTransaction(state) {
+      state.transaction = [];
+      localStorage.removeItem("transactions");
+    },
   },
 });
 
